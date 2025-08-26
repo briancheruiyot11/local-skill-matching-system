@@ -14,9 +14,9 @@ class Worker(Base):
     location = Column(String, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
 
-    # -------------------------
+    
     # CRUD + Find Methods
-    # -------------------------
+    
     @classmethod
     def create(cls, **kwargs):
         session = SessionLocal()
@@ -29,6 +29,8 @@ class Worker(Base):
             )
             session.add(worker)
             session.commit()
+            session.refresh(worker)  
+            print(f"🎉 Worker '{worker.name}' created with ID {worker.id}")
             return worker
         except Exception as e:
             session.rollback()
