@@ -20,4 +20,4 @@ def display_table(data, headers):
     if not data:
         print("No records found.")
         return
-    print(tabulate(data, headers=headers, tablefmt="grid"))
+    print(tabulate(data, headers=headers, tablefmt="fancy_grid"))
