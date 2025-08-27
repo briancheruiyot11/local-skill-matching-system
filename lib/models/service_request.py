@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, joinedload
 from lib.db.db import Base, SessionLocal
+from lib.helpers import display_table
 from datetime import datetime, date  
 
 STATUS = ("Pending", "In Progress", "Completed", "Cancelled")
@@ -21,7 +22,6 @@ class ServiceRequest(Base):
     def create(cls, **kwargs):
         session = SessionLocal()
         try:
-            # Handle date input
             date_value = kwargs.get("date", date.today())
             if isinstance(date_value, str):
                 date_value = datetime.strptime(date_value, "%Y-%m-%d").date()
@@ -91,8 +91,69 @@ class ServiceRequest(Base):
 
     @classmethod
     def for_worker(cls, worker_id):
-        """Return all service requests for a given worker"""
         session = SessionLocal()
         results = session.query(cls).filter(cls.worker_id == worker_id).all()
         session.close()
         return results
+
+    @classmethod
+    def list_by_worker(cls, worker_id):
+        requests = cls.for_worker(worker_id)
+        if requests:
+            data = [(r.id, r.requester_name, r.date, r.status, r.notes) for r in requests]
+            display_table(data, ["ID", "Requester", "Date", "Status", "Notes"])
+        else:
+            print(f"❌ No service requests found for worker ID {worker_id}")
+
+    @classmethod
+    def list_all(cls):
+        requests = cls.get_all()
+        if requests:
+            data = [(r.id, r.worker_id, r.requester_name, r.date, r.status, r.notes) for r in requests]
+            display_table(data, ["ID", "Worker ID", "Requester", "Date", "Status", "Notes"])
+        else:
+            print("❌ No service requests found.")
+
+    @classmethod
+    def find_by_id(cls, id):
+        req = cls.get_by_id(id)
+        if req:
+            data = [(req.id, req.worker_id, req.requester_name, req.date, req.status, req.notes)]
+            display_table(data, ["ID", "Worker ID", "Requester", "Date", "Status", "Notes"])
+        else:
+            print(f"❌ Service Request with ID {id} not found.")
+
+    @classmethod
+    def view_worker(cls, request_id):
+        """Display the worker assigned to a given service request using a live session"""
+        session = SessionLocal()
+        req = session.query(cls).options(joinedload(cls.worker)).filter(cls.id == request_id).first()
+        if req and req.worker:
+            worker = req.worker
+            data = [(worker.id, worker.name, worker.skill, worker.phone, worker.location)]
+            display_table(data, ["ID", "Name", "Skill", "Phone", "Location"])
+        elif req:
+            print(f"❌ Service Request {request_id} has no assigned worker.")
+        else:
+            print(f"❌ Service Request with ID {request_id} not found.")
+        session.close()
+
+    def update(self, requester_name=None, notes=None, status=None):
+        """Update the service request fields"""
+        session = SessionLocal()
+        try:
+            if requester_name is not None:
+                self.requester_name = requester_name
+            if notes is not None:
+                self.notes = notes
+            if status is not None:
+                if status not in STATUS:
+                    raise ValueError(f"Status must be one of {STATUS}")
+                self.status = status
+            session.add(self)
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
