@@ -21,3 +21,8 @@ def display_table(data, headers):
         print("No records found.")
         return
     print(tabulate(data, headers=headers, tablefmt="fancy_grid"))
+    
+def print_header(title: str):
+    print("\n" + "=" * 60)
+    print(title)
+    print("=" * 60)
