@@ -14,34 +14,33 @@ class Worker(Base):
     location = Column(String, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
 
-    
     # CRUD + Find Methods
-    
+
     @classmethod
-    def create(cls, **kwargs):
+    def create(cls, name, skill, phone, location):
         session = SessionLocal()
         try:
             worker = cls(
-                name=kwargs["name"],
-                skill=validate_skill(kwargs["skill"], SKILLS),
-                phone=normalize_phone(kwargs["phone"]),
-                location=kwargs["location"],
+                name=name,
+                skill=validate_skill(skill, SKILLS),
+                phone=normalize_phone(phone),
+                location=location,
             )
             session.add(worker)
             session.commit()
-            session.refresh(worker)  
-            print(f"🎉 Worker '{worker.name}' created with ID {worker.id}")
+            session.refresh(worker)
+            print(f"✅ Worker '{worker.name}' created with ID {worker.id}")
             return worker
-        except Exception as e:
+        except Exception:
             session.rollback()
-            raise e
+            raise
         finally:
             session.close()
 
     @classmethod
     def delete(cls, id):
         session = SessionLocal()
-        worker = session.query(cls).get(id)
+        worker = session.get(cls, id)
         if not worker:
             session.close()
             return False
@@ -60,7 +59,7 @@ class Worker(Base):
     @classmethod
     def get_by_id(cls, id):
         session = SessionLocal()
-        worker = session.query(cls).get(id)
+        worker = session.get(cls, id)
         session.close()
         return worker
 
@@ -84,3 +83,26 @@ class Worker(Base):
         results = session.query(cls).filter(cls.location.ilike(f"%{substring}%")).all()
         session.close()
         return results
+
+    # Update worker details
+    def update(self, name=None, skill=None, phone=None, location=None):
+        session = SessionLocal()
+        try:
+            worker = session.get(Worker, self.id)
+            if name:
+                worker.name = name
+            if skill:
+                worker.skill = validate_skill(skill, SKILLS)
+            if phone:
+                worker.phone = normalize_phone(phone)
+            if location:
+                worker.location = location
+            session.commit()
+            session.refresh(worker)
+            print(f"✅ Worker {worker.id} updated successfully.")
+            return worker
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
