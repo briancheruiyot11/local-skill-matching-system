@@ -1,4 +1,4 @@
-# 👷🛠️ Local Skill Matching System (MVP) 🛠️👷
+# 👷🛠️ Local Skill Matching System 🛠️👷
 
 Local Skill Matching System, a simple and user-friendly CLI project that helps connect skilled local workers with service requests. It streamlines managing workers, service requests, and reviews, using realistic Kenyan data for demonstration. The system makes it easy to find workers, assign them to tasks, and track feedback efficiently.
 
@@ -11,8 +11,8 @@ Local Skill Matching System, a simple and user-friendly CLI project that helps c
 - [Models & Relationships](#models--relationships)  
 - [Seeding Data](#seeding-data)  
 - [Dependencies](#dependencies)  
-
- 
+- [Author](#-author)  
+- [License](#-license)
 
 ---
 
@@ -40,7 +40,7 @@ pipenv shell
 python -m lib.cli
 ```
 ### Main Menu
-- Choose a number:  
+Choose a number:  
   1. **Workers**  
   2. **Service Requests**  
   3. **Reviews**  
@@ -81,20 +81,13 @@ python -m lib.cli
 - Add, view, and delete reviews for workers.
 - Search reviews by ID.
 - Quickly view the worker associated with a review.
-
-### CLI Features
-- Interactive menus with input validation.
-- Tabular display of data.
-- Confirmation prompts for deletion.
-- Graceful handling of empty datasets.
-
 ---
 
 ## Installation
 
 1. Clone the repository:
 ```
-git clone <repo-url>
+git clone https://github.com/briancheruiyot11/local-skill-matching-system.git
 cd LOCAL-SKILL-MATCHING
 ```
 2. Install dependencies using Pipenv:
@@ -106,20 +99,22 @@ pipenv shell
 ```
 python -m lib.cli
 ```
+
 ## Models & Relationships
 
 ### Worker
 - **Fields:** id, name, skill, phone, location, created_at  
-- **Relationships:** service_requests (1:N), reviews (1:N)  
-- **Validation:** name ≥ 2 chars, skill ∈ allowed SKILLS, phone normalized to +2547XXXXXXXX, location required  
+- **Relations:** has many service requests and reviews  
+- **Validation:** name ≥ 2 chars, skill in allowed SKILLS, phone in +2547XXXXXXXX format, location required  
 
 ### ServiceRequest
 - **Fields:** id, worker_id, requester_name, date, status, notes  
-- **Validation:** status ∈ STATUS tuple, date ≥ 2000-01-01  
+- **Validation:** status in STATUS tuple, date ≥ 2000-01-01  
 
 ### Review
 - **Fields:** id, worker_id, rating, comment, created_at  
-- **Validation:** rating 1–5, comment ≤ 500 characters  
+- **Validation:** rating 1–5, comment ≤ 500 chars
+ 
 
 ---
 
