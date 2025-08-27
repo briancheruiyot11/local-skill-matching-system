@@ -1,19 +1,18 @@
 # 👷🛠️ Local Skill Matching System (MVP) 🛠️👷
 
-A **Command-Line Interface (CLI) application** to manage local workers, service requests, and reviews. This MVP helps match skilled workers with service requests efficiently and keeps track of user feedback.
+Local Skill Matching System, a simple and user-friendly CLI project that helps connect skilled local workers with service requests. It streamlines managing workers, service requests, and reviews, using realistic Kenyan data for demonstration. The system makes it easy to find workers, assign them to tasks, and track feedback efficiently.
 
----
 
 ## Table of Contents
-
 - [Project Overview](#project-overview)  
 - [Features](#features)  
 - [Installation](#installation)  
-- [Usage](#usage)  
-- [Project Structure](#project-structure)  
+- [How to Use](#how-to-use)  
 - [Models & Relationships](#models--relationships)  
 - [Seeding Data](#seeding-data)  
 - [Dependencies](#dependencies)  
+
+ 
 
 ---
 
