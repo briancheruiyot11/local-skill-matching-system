@@ -9,6 +9,7 @@ rich = "*"
 sqlalchemy = "*"
 tabulate = "*"
 faker = "*"
+alembic = "*"
 
 [dev-packages]
 ipdb = "*"
