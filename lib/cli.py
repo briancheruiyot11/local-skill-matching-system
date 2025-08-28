@@ -165,7 +165,7 @@ def service_requests_menu():
                 requester_name = input("Requester Name: ")
                 notes = input("Notes/Description: ")
                 ServiceRequest.create(worker_id=worker_id, requester_name=requester_name, notes=notes)
-                print("🥳 Service request added successfully.")
+                print("🎉 Service request added successfully.")
             except Exception as e:
                 print(f"Error: {e}")
 
@@ -219,7 +219,7 @@ def service_requests_menu():
             if confirm == "yes":
                 try:
                     req.update(requester_name=new_name, notes=new_notes, status=new_status)
-                    print("🥳 Service Request updated successfully.")
+                    print("🎉 Service Request updated successfully.")
                 except Exception as e:
                     print(f"Error updating service request: {e}")
             else:
@@ -250,7 +250,7 @@ def reviews_menu():
                 rating = int(input("Rating (1-5): "))
                 comment = input("Comment: ")
                 Review.create(worker_id=worker_id, rating=rating, comment=comment)
-                print("🥳 Review added successfully.")
+                print("🎉 Review added successfully.")
             except Exception as e:
                 print(f"Error: {e}")
 
