@@ -133,8 +133,10 @@ The project includes seed scripts using uses **Faker** to generate realistic Ken
 - **Python 3.8+**  
 - **Pipenv** (for dependency management)  
 - **SQLAlchemy** (ORM)  
+- **Alembic** (for database migrations)  
 - **tabulate** (for tabular display)  
 - **Faker** (for generating seed data)  
+ 
 
 ---
 
