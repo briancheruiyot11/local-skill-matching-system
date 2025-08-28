@@ -4,13 +4,13 @@ Local Skill Matching System, a simple and user-friendly CLI project that helps c
 
 
 ## Table of Contents
-- [Project Overview](#project-overview)  
-- [Features](#features)  
-- [Installation](#installation)  
-- [How to Use](#how-to-use)  
+- [Project Overview](#project-overview)
+- [How to Use](#how-to-use) 
+- [Features](#features)
+- [Dependencies](#dependencies) 
+- [Installation](#installation) 
 - [Models & Relationships](#models--relationships)  
-- [Seeding Data](#seeding-data)  
-- [Dependencies](#dependencies)  
+- [Seeding Data](#seeding-data)   
 - [Author](#-author)  
 - [License](#-license)
 
@@ -83,6 +83,18 @@ Choose a number:
 - Quickly view the worker associated with a review.
 ---
 
+## Dependencies
+
+- **Python 3.8+**  
+- **Pipenv** (for dependency management)  
+- **SQLAlchemy** (ORM)  
+- **Alembic** (for database migrations)  
+- **tabulate** (for tabular display)  
+- **Faker** (for generating seed data)  
+ 
+
+---
+
 ## Installation
 
 1. Clone the repository:
@@ -125,18 +137,6 @@ The project includes seed scripts using uses **Faker** to generate realistic Ken
 - **Workers:** 20  
 - **Service Requests:** 10  
 - **Reviews:** 30  
-
----
-
-## Dependencies
-
-- **Python 3.8+**  
-- **Pipenv** (for dependency management)  
-- **SQLAlchemy** (ORM)  
-- **Alembic** (for database migrations)  
-- **tabulate** (for tabular display)  
-- **Faker** (for generating seed data)  
- 
 
 ---
 
