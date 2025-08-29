@@ -3,7 +3,7 @@ from lib.models.service_request import ServiceRequest, STATUS
 from lib.models.review import Review
 from lib.helpers import display_table, print_header
 
-
+# Main menu 
 def main_menu():
     while True:
         print_header("=== 👷🛠️ Local Skill Matching System 🛠️👷 ===")
@@ -15,18 +15,18 @@ def main_menu():
         choice = input("Pick an option: ").strip()
 
         if choice == "1":
-            workers_menu()
+            workers_menu()  
         elif choice == "2":
-            service_requests_menu()
+            service_requests_menu()  
         elif choice == "3":
-            reviews_menu()
+            reviews_menu()  
         elif choice == "0":
-            print("🙋 Welcome Back Again!! 👋 Goodbye!")
+            print("🙋 Welcome Back Again!! 👋 Goodbye!") 
             break
         else:
             print("❌ Invalid choice. Please try again.")
 
-
+# Workers menu
 def workers_menu():
     while True:
         print_header("=== 👷‍♂️ Workers Menu ⚒️ ===")
@@ -46,6 +46,7 @@ def workers_menu():
 
         if choice == "1":
             try:
+                # Collect new worker details
                 name = input("Name: ")
                 skill = input(f"Skill {SKILLS}: ")
                 phone = input("Phone: ")
@@ -61,16 +62,18 @@ def workers_menu():
                 print("❌ Invalid ID.")
                 continue
             if Worker.delete(wid):
-                print("🚮 Worker deleted successfully.")
+                print("🚮 Worker deleted successfully.")  
             else:
                 print("❌ Worker not found.")
 
         elif choice == "3":
+            # Display all workers in table format
             workers = Worker.get_all()
             data = [(w.id, w.name, w.skill, w.phone, w.location) for w in workers]
             display_table(data, ["ID", "Name", "Skill", "Phone", "Location"])
 
         elif choice == "4":
+            # Find worker by ID
             try:
                 wid = int(input("Worker ID: "))
             except ValueError:
@@ -84,24 +87,28 @@ def workers_menu():
                 print("❌ Worker not found.")
 
         elif choice == "5":
+            # Search workers by name
             name = input("Enter name to search: ")
             workers = Worker.find_by_name(name)
             data = [(w.id, w.name, w.skill, w.phone, w.location) for w in workers]
             display_table(data, ["ID", "Name", "Skill", "Phone", "Location"])
 
         elif choice == "6":
+            # Search workers by skill
             skill = input(f"Enter skill {SKILLS}: ")
             workers = Worker.find_by_skill(skill)
             data = [(w.id, w.name, w.skill, w.phone, w.location) for w in workers]
             display_table(data, ["ID", "Name", "Skill", "Phone", "Location"])
 
         elif choice == "7":
+            # Search workers by location
             location = input("Enter location to search: ")
             workers = Worker.find_by_location(location)
             data = [(w.id, w.name, w.skill, w.phone, w.location) for w in workers]
             display_table(data, ["ID", "Name", "Skill", "Phone", "Location"])
 
         elif choice == "8":
+            # Show service requests for a worker
             try:
                 wid = int(input("Worker ID: "))
             except ValueError:
@@ -110,6 +117,7 @@ def workers_menu():
             ServiceRequest.list_by_worker(wid)
 
         elif choice == "9":
+            # Show reviews for a worker
             try:
                 wid = int(input("Worker ID: "))
             except ValueError:
@@ -118,6 +126,7 @@ def workers_menu():
             Review.list_by_worker(wid)
 
         elif choice == "10":
+            # Update worker details
             try:
                 wid = int(input("Enter Worker ID to update: "))
             except ValueError:
@@ -136,6 +145,7 @@ def workers_menu():
 
             try:
                 worker.update(name=name, skill=skill, phone=phone, location=location)
+                print("✅ Worker updated successfully.")
             except Exception as e:
                 print(f"Error updating worker: {e}")
 
@@ -146,6 +156,7 @@ def workers_menu():
             print("❌ Invalid choice. Please try again.")
 
 
+# Service Requests menu
 def service_requests_menu():
     while True:
         print_header("=== 🧰 Service Requests Menu 🧰 ===")
@@ -181,9 +192,11 @@ def service_requests_menu():
                 print("❌ Service Request not found.")
 
         elif choice == "3":
+            # Display all service requests
             ServiceRequest.list_all()
 
         elif choice == "4":
+            # Find service request by ID
             try:
                 rid = int(input("Request ID: "))
             except ValueError:
@@ -192,6 +205,7 @@ def service_requests_menu():
             ServiceRequest.find_by_id(rid)
 
         elif choice == "5":
+            # View the worker linked to a request
             try:
                 rid = int(input("Request ID: "))
             except ValueError:
@@ -200,6 +214,7 @@ def service_requests_menu():
             ServiceRequest.view_worker(rid)
 
         elif choice == "6":
+            # Update service request details
             try:
                 rid = int(input("Enter Service Request ID to update: "))
             except ValueError:
@@ -232,6 +247,7 @@ def service_requests_menu():
             print("❌ Invalid choice. Please try again.")
 
 
+# Reviews menu
 def reviews_menu():
     while True:
         print_header("=== ⭐ Reviews Menu ⭐ ===")
@@ -258,7 +274,7 @@ def reviews_menu():
             try:
                 rid = int(input("Review ID: "))
             except ValueError:
-                print("Invalid ID.")
+                print("❌ Invalid ID.")
                 continue
             if Review.delete(rid):
                 print("🚮 Review deleted.")
@@ -266,9 +282,11 @@ def reviews_menu():
                 print("❌ Review not found.")
 
         elif choice == "3":
+            # Display all reviews
             Review.list_all()
 
         elif choice == "4":
+            # Find review by ID
             try:
                 rid = int(input("Review ID: "))
             except ValueError:
@@ -277,6 +295,7 @@ def reviews_menu():
             Review.find_by_id(rid)
 
         elif choice == "5":
+            # View worker linked to a review
             try:
                 rid = int(input("Review ID: "))
             except ValueError:
@@ -292,4 +311,4 @@ def reviews_menu():
 
 
 if __name__ == "__main__":
-    main_menu()
+    main_menu()  

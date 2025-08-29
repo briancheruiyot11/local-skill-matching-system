@@ -18,6 +18,8 @@ class ServiceRequest(Base):
 
     worker = relationship("Worker", backref="service_requests")
 
+# CRUD + Find Methods
+
     @classmethod
     def create(cls, **kwargs):
         session = SessionLocal()

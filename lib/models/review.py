@@ -14,6 +14,7 @@ class Review(Base):
 
     worker = relationship("Worker", backref="reviews")
 
+# CRUD + Find Methods
     @classmethod
     def create(cls, **kwargs):
         session = SessionLocal()
